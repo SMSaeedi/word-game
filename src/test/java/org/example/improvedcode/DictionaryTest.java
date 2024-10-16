@@ -28,11 +28,11 @@ class DictionaryTest {
     }
 
     @Test
-    void testPopWord() {
-        String firstWord = dictionary.pop(null);
+    void testGetNextWordWord() {
+        String firstWord = dictionary.getNextWord(null);
         assertEquals("apple", firstWord);
 
-        String secondWord = dictionary.pop("apple");
+        String secondWord = dictionary.getNextWord("apple");
         assertEquals("elephant", secondWord);
     }
 
@@ -43,8 +43,8 @@ class DictionaryTest {
     }
 
     @Test
-    void testPopAndRemove() {
-        String word = dictionary.pop(null);
+    void testGetNextWordAndRemove() {
+        String word = dictionary.getNextWord(null);
         assertNotNull(word);
         dictionary.remove(word);
         assertFalse(dictionary.contains(word));

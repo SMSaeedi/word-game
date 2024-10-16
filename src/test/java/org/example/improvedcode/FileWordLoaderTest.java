@@ -17,6 +17,12 @@ class FileWordLoaderTest {
         BufferedReader bufferedReaderMock = mock(BufferedReader.class);
 
         FileReader fileReaderMock = mock(FileReader.class);
+        /**
+         * While your test passing without mocks may indicate that it works correctly under the given conditions,
+         * introducing mocks can enhance the reliability, speed,
+         * and maintainability of your tests by isolating dependencies and ensuring
+         * that you're only testing the unit in question.
+         */
         whenNew(FileReader.class).withArguments("dictionary.txt").thenReturn(fileReaderMock);
         whenNew(BufferedReader.class).withArguments(fileReaderMock).thenReturn(bufferedReaderMock);
 

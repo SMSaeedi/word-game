@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.*;
 
 interface WordLoader {
+    /**
+     * Allowing:  different implementations, Flexibility and Extensibility (OCP), Dependency Inversion Principle (DIP),
+     * Testing and Mocking, Separation of Concerns
+     */
     List<String> loadWords();
 }
 
@@ -29,26 +33,26 @@ class FileWordLoader implements WordLoader {
 }
 
 class Dictionary {
-    private final List<String> words;
-    private final Set<String> wordSet;
+    private final Set<String> words;
 
     public Dictionary(WordLoader wordLoader) {
-        this.words = new ArrayList<>(wordLoader.loadWords());
-        this.wordSet = new HashSet<>(words);
+        /**
+         * Replacing the List and Set with a single LinkedHashSet.
+         * To achieve: order preservation and efficient lookups: Like a Set, it offers O(1) time complexity for lookups.
+        */
+        this.words = new LinkedHashSet<>(wordLoader.loadWords());
     }
 
     public boolean contains(String word) {
-        return wordSet.contains(word);
+        return words.contains(word);
     }
 
-    public String pop(String lastWord) {
-        List<String> modifiableWords = new ArrayList<>(words);
-        Iterator<String> iterator = modifiableWords.iterator();
+    public String getNextWord(String lastWord) {
+        Iterator<String> iterator = words.iterator();
         while (iterator.hasNext()) {
             String word = iterator.next();
             if (lastWord == null || word.charAt(0) == lastWord.charAt(lastWord.length() - 1)) {
                 iterator.remove();
-                wordSet.remove(word);
                 return word;
             }
         }
@@ -56,10 +60,7 @@ class Dictionary {
     }
 
     public void remove(String word) {
-        if (wordSet.contains(word)) {
-            words.remove(word);
-            wordSet.remove(word);
-        }
+        words.remove(word);
     }
 }
 
@@ -76,7 +77,7 @@ class WordGame {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            lastWord = dictionary.pop(lastWord);
+            lastWord = dictionary.getNextWord(lastWord);
             if (lastWord == null) {
                 System.err.println("No more words available.");
                 break;

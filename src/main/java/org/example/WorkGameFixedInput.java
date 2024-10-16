@@ -23,6 +23,11 @@ public class WorkGameFixedInput {
 
     public void start(Supplier<String> inputSupplier) {
         while (!isWordGuessed() && wrongLetters.size() < maxAttempts) {
+            if (wrongLetters.size() >= maxAttempts) {
+                System.err.println("Game Over! The word was: " + wordToGuess);
+                break;
+            }
+
             System.out.println("Current word: " + new String(currentGuess));
             System.out.println("Guessed wrong letters: " + wrongLetters);
             System.out.println("Attempts remaining: " + getRemainedAttempts());
@@ -36,11 +41,6 @@ public class WorkGameFixedInput {
             } else {
                 System.err.println("Please guess a valid letter");
                 wrongLetters.add(' ');
-            }
-
-            if (wrongLetters.size() >= maxAttempts) {
-                System.err.println("Game Over! The word was: " + wordToGuess);
-                break;
             }
         }
 
