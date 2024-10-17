@@ -1,4 +1,4 @@
-package org.example.improvedcode;
+package org.example.improvedcode.list;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
